@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="ats.global.techsoft.slayers.model.Employees">
+		<field name="uuid" type="String" />
+		<field name="EmployeeId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="EmpKey" type="long" />
+		<field name="EmpName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="EmpPhoto" type="String" />
+		<field name="EmpGender" type="String" />
+		<field name="EmpAge" type="int" />
+		<field name="EmplRole" type="String" />
+		<field name="EmpAddress" type="String" />
+	</model>
+</model-hints>

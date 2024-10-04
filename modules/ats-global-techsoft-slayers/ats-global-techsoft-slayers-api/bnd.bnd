@@ -1,0 +1,10 @@
+Bundle-Name: ats-global-techsoft-slayers-api
+Bundle-SymbolicName: ats.global.techsoft.slayers.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	ats.global.techsoft.slayers.exception,\
+	ats.global.techsoft.slayers.model,\
+	ats.global.techsoft.slayers.service,\
+	ats.global.techsoft.slayers.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../ats-global-techsoft-slayers-service/service.xml

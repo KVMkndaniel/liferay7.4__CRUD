@@ -1,0 +1,4 @@
+Bundle-Name: ats-global-techsoft-portlet
+Bundle-SymbolicName: ats.global.techsoft.portlet
+Bundle-Version: 1.0.0
+Export-Package: ats.global.techsoft.portlet.constants

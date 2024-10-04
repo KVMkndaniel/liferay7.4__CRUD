@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder dependency-injector="ds" package-path="ats.global.techsoft.slayers">
+	<namespace>ATS</namespace>
+
+	<entity local-service="true" name="Employees" remote-service="true" uuid="true">
+		<!-- PK fields -->
+		<column name="EmployeeId" primary="true" type="long" id-type="increment" />
+		<!-- Group instance -->
+		<column name="groupId" type="long" />
+		<!-- Audit fields -->
+		<column name="companyId" type="long" />
+		<column name="EmpKey" type="long" />
+		<column name="EmpName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<!-- Other fields -->
+		<column name="EmpPhoto" type="String" />   
+		<column name="EmpGender" type="String" />
+		<column name="EmpAge" type="int" />
+		<column name="EmplRole" type="String" />  
+		<column name="EmpAddress" type="String" />
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="EmpName" />
+		</order>
+		<!-- Finder methods -->
+		<finder name="EmployeeId" return-type="Collection">
+			<finder-column name="EmployeeId" />
+		</finder>
+	</entity>
+	
+</service-builder>

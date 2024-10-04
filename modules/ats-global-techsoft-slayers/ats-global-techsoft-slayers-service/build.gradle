@@ -1,0 +1,11 @@
+dependencies {
+	compile project(":modules:ats-global-techsoft-slayers:ats-global-techsoft-slayers-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
+}
+
+buildService {
+	apiDir = "../ats-global-techsoft-slayers-api/src/main/java"
+}
+
+group = "ats.global.techsoft.slayers"
