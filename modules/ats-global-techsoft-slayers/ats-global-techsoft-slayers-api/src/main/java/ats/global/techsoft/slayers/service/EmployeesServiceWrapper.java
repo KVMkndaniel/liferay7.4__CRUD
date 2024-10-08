@@ -54,6 +54,13 @@ public class EmployeesServiceWrapper
 		return _employeesService.convertImageToBase64(inputStream);
 	}
 
+	@Override
+	public ats.global.techsoft.slayers.model.Employees deleteEmployees(
+		ats.global.techsoft.slayers.model.Employees employees) {
+
+		return _employeesService.deleteEmployees(employees);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -62,6 +69,19 @@ public class EmployeesServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _employeesService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public ats.global.techsoft.slayers.model.Employees updateEmployees(
+			long employeeId, String empName, java.io.InputStream empPhotoStream,
+			String empGender, int empAge, String emplRole, String empAddress,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws ats.global.techsoft.slayers.exception.NoSuchEmployeesException,
+			   java.io.IOException {
+
+		return _employeesService.updateEmployees(
+			employeeId, empName, empPhotoStream, empGender, empAge, emplRole,
+			empAddress, serviceContext);
 	}
 
 	@Override

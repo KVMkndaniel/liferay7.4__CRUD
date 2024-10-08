@@ -517,6 +517,292 @@ public interface EmployeesPersistence extends BasePersistence<Employees> {
 	public int countByEmployeeId(long EmployeeId);
 
 	/**
+	 * Returns all the employeeses where EmpName = &#63;.
+	 *
+	 * @param EmpName the emp name
+	 * @return the matching employeeses
+	 */
+	public java.util.List<Employees> findByEmpName(String EmpName);
+
+	/**
+	 * Returns a range of all the employeeses where EmpName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>EmployeesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param EmpName the emp name
+	 * @param start the lower bound of the range of employeeses
+	 * @param end the upper bound of the range of employeeses (not inclusive)
+	 * @return the range of matching employeeses
+	 */
+	public java.util.List<Employees> findByEmpName(
+		String EmpName, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the employeeses where EmpName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>EmployeesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param EmpName the emp name
+	 * @param start the lower bound of the range of employeeses
+	 * @param end the upper bound of the range of employeeses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching employeeses
+	 */
+	public java.util.List<Employees> findByEmpName(
+		String EmpName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Employees>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the employeeses where EmpName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>EmployeesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param EmpName the emp name
+	 * @param start the lower bound of the range of employeeses
+	 * @param end the upper bound of the range of employeeses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching employeeses
+	 */
+	public java.util.List<Employees> findByEmpName(
+		String EmpName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Employees>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first employees in the ordered set where EmpName = &#63;.
+	 *
+	 * @param EmpName the emp name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching employees
+	 * @throws NoSuchEmployeesException if a matching employees could not be found
+	 */
+	public Employees findByEmpName_First(
+			String EmpName,
+			com.liferay.portal.kernel.util.OrderByComparator<Employees>
+				orderByComparator)
+		throws NoSuchEmployeesException;
+
+	/**
+	 * Returns the first employees in the ordered set where EmpName = &#63;.
+	 *
+	 * @param EmpName the emp name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching employees, or <code>null</code> if a matching employees could not be found
+	 */
+	public Employees fetchByEmpName_First(
+		String EmpName,
+		com.liferay.portal.kernel.util.OrderByComparator<Employees>
+			orderByComparator);
+
+	/**
+	 * Returns the last employees in the ordered set where EmpName = &#63;.
+	 *
+	 * @param EmpName the emp name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching employees
+	 * @throws NoSuchEmployeesException if a matching employees could not be found
+	 */
+	public Employees findByEmpName_Last(
+			String EmpName,
+			com.liferay.portal.kernel.util.OrderByComparator<Employees>
+				orderByComparator)
+		throws NoSuchEmployeesException;
+
+	/**
+	 * Returns the last employees in the ordered set where EmpName = &#63;.
+	 *
+	 * @param EmpName the emp name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching employees, or <code>null</code> if a matching employees could not be found
+	 */
+	public Employees fetchByEmpName_Last(
+		String EmpName,
+		com.liferay.portal.kernel.util.OrderByComparator<Employees>
+			orderByComparator);
+
+	/**
+	 * Returns the employeeses before and after the current employees in the ordered set where EmpName = &#63;.
+	 *
+	 * @param EmployeeId the primary key of the current employees
+	 * @param EmpName the emp name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next employees
+	 * @throws NoSuchEmployeesException if a employees with the primary key could not be found
+	 */
+	public Employees[] findByEmpName_PrevAndNext(
+			long EmployeeId, String EmpName,
+			com.liferay.portal.kernel.util.OrderByComparator<Employees>
+				orderByComparator)
+		throws NoSuchEmployeesException;
+
+	/**
+	 * Removes all the employeeses where EmpName = &#63; from the database.
+	 *
+	 * @param EmpName the emp name
+	 */
+	public void removeByEmpName(String EmpName);
+
+	/**
+	 * Returns the number of employeeses where EmpName = &#63;.
+	 *
+	 * @param EmpName the emp name
+	 * @return the number of matching employeeses
+	 */
+	public int countByEmpName(String EmpName);
+
+	/**
+	 * Returns all the employeeses where EmplRole = &#63;.
+	 *
+	 * @param EmplRole the empl role
+	 * @return the matching employeeses
+	 */
+	public java.util.List<Employees> findByEmplRole(String EmplRole);
+
+	/**
+	 * Returns a range of all the employeeses where EmplRole = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>EmployeesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param EmplRole the empl role
+	 * @param start the lower bound of the range of employeeses
+	 * @param end the upper bound of the range of employeeses (not inclusive)
+	 * @return the range of matching employeeses
+	 */
+	public java.util.List<Employees> findByEmplRole(
+		String EmplRole, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the employeeses where EmplRole = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>EmployeesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param EmplRole the empl role
+	 * @param start the lower bound of the range of employeeses
+	 * @param end the upper bound of the range of employeeses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching employeeses
+	 */
+	public java.util.List<Employees> findByEmplRole(
+		String EmplRole, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Employees>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the employeeses where EmplRole = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>EmployeesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param EmplRole the empl role
+	 * @param start the lower bound of the range of employeeses
+	 * @param end the upper bound of the range of employeeses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching employeeses
+	 */
+	public java.util.List<Employees> findByEmplRole(
+		String EmplRole, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Employees>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first employees in the ordered set where EmplRole = &#63;.
+	 *
+	 * @param EmplRole the empl role
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching employees
+	 * @throws NoSuchEmployeesException if a matching employees could not be found
+	 */
+	public Employees findByEmplRole_First(
+			String EmplRole,
+			com.liferay.portal.kernel.util.OrderByComparator<Employees>
+				orderByComparator)
+		throws NoSuchEmployeesException;
+
+	/**
+	 * Returns the first employees in the ordered set where EmplRole = &#63;.
+	 *
+	 * @param EmplRole the empl role
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching employees, or <code>null</code> if a matching employees could not be found
+	 */
+	public Employees fetchByEmplRole_First(
+		String EmplRole,
+		com.liferay.portal.kernel.util.OrderByComparator<Employees>
+			orderByComparator);
+
+	/**
+	 * Returns the last employees in the ordered set where EmplRole = &#63;.
+	 *
+	 * @param EmplRole the empl role
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching employees
+	 * @throws NoSuchEmployeesException if a matching employees could not be found
+	 */
+	public Employees findByEmplRole_Last(
+			String EmplRole,
+			com.liferay.portal.kernel.util.OrderByComparator<Employees>
+				orderByComparator)
+		throws NoSuchEmployeesException;
+
+	/**
+	 * Returns the last employees in the ordered set where EmplRole = &#63;.
+	 *
+	 * @param EmplRole the empl role
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching employees, or <code>null</code> if a matching employees could not be found
+	 */
+	public Employees fetchByEmplRole_Last(
+		String EmplRole,
+		com.liferay.portal.kernel.util.OrderByComparator<Employees>
+			orderByComparator);
+
+	/**
+	 * Returns the employeeses before and after the current employees in the ordered set where EmplRole = &#63;.
+	 *
+	 * @param EmployeeId the primary key of the current employees
+	 * @param EmplRole the empl role
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next employees
+	 * @throws NoSuchEmployeesException if a employees with the primary key could not be found
+	 */
+	public Employees[] findByEmplRole_PrevAndNext(
+			long EmployeeId, String EmplRole,
+			com.liferay.portal.kernel.util.OrderByComparator<Employees>
+				orderByComparator)
+		throws NoSuchEmployeesException;
+
+	/**
+	 * Removes all the employeeses where EmplRole = &#63; from the database.
+	 *
+	 * @param EmplRole the empl role
+	 */
+	public void removeByEmplRole(String EmplRole);
+
+	/**
+	 * Returns the number of employeeses where EmplRole = &#63;.
+	 *
+	 * @param EmplRole the empl role
+	 * @return the number of matching employeeses
+	 */
+	public int countByEmplRole(String EmplRole);
+
+	/**
 	 * Caches the employees in the entity cache if it is enabled.
 	 *
 	 * @param employees the employees

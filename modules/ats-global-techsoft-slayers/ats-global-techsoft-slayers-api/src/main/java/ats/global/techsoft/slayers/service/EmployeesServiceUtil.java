@@ -55,6 +55,10 @@ public class EmployeesServiceUtil {
 		return getService().convertImageToBase64(inputStream);
 	}
 
+	public static Employees deleteEmployees(Employees employees) {
+		return getService().deleteEmployees(employees);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -62,6 +66,18 @@ public class EmployeesServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static Employees updateEmployees(
+			long employeeId, String empName, InputStream empPhotoStream,
+			String empGender, int empAge, String emplRole, String empAddress,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws ats.global.techsoft.slayers.exception.NoSuchEmployeesException,
+			   java.io.IOException {
+
+		return getService().updateEmployees(
+			employeeId, empName, empPhotoStream, empGender, empAge, emplRole,
+			empAddress, serviceContext);
 	}
 
 	public static EmployeesService getService() {

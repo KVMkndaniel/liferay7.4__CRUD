@@ -11,28 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package ats.global.techsoft.slayers.exception;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+package ats.global.techsoft.slayers.model.impl;
 
 /**
- * @author 
+ * @author Brian Wing Shun Chan
  */
-public class NoSuchEmployeesException extends NoSuchModelException {
-
-	public NoSuchEmployeesException() {
-	}
-
-	public NoSuchEmployeesException(String msg) {
-		super(msg);
-	}
-
-	public NoSuchEmployeesException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public NoSuchEmployeesException(Throwable throwable) {
-		super(throwable);
-	}
-
+public class studentImpl extends studentBaseImpl {
 }

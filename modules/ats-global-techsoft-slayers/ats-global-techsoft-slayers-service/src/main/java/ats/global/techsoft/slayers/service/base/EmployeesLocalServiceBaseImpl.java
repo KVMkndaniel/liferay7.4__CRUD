@@ -17,7 +17,9 @@ package ats.global.techsoft.slayers.service.base;
 import ats.global.techsoft.slayers.model.Employees;
 import ats.global.techsoft.slayers.service.EmployeesLocalService;
 import ats.global.techsoft.slayers.service.EmployeesLocalServiceUtil;
+import ats.global.techsoft.slayers.service.persistence.EmployeesFinder;
 import ats.global.techsoft.slayers.service.persistence.EmployeesPersistence;
+import ats.global.techsoft.slayers.service.persistence.studentPersistence;
 
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -594,6 +596,12 @@ public abstract class EmployeesLocalServiceBaseImpl
 
 	@Reference
 	protected EmployeesPersistence employeesPersistence;
+
+	@Reference
+	protected EmployeesFinder employeesFinder;
+
+	@Reference
+	protected studentPersistence studentPersistence;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

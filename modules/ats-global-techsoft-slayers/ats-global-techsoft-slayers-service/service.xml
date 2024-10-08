@@ -29,6 +29,18 @@
 		<finder name="EmployeeId" return-type="Collection">
 			<finder-column name="EmployeeId" />
 		</finder>
+		<finder name="EmpName" return-type="Collection">
+			<finder-column name="EmpName" />
+		</finder>
+		<finder name="EmplRole" return-type="Collection">
+			<finder-column name="EmplRole" />
+		</finder>
+	</entity>
+	
+	<entity local-service="true" name="student" remote-service="true" uuid="true">
+	<column name="id" primary="true" type="long" id-type="increment" />
+	<column name="name" type="String" />  
+	<column name="standard" type="String" />
 	</entity>
 	
 </service-builder>

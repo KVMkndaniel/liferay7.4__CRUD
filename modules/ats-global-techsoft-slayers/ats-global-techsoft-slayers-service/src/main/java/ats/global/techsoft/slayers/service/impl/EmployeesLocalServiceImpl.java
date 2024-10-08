@@ -16,18 +16,27 @@ package ats.global.techsoft.slayers.service.impl;
 
 import ats.global.techsoft.slayers.exception.NoSuchEmployeesException;
 import ats.global.techsoft.slayers.model.Employees;
+import ats.global.techsoft.slayers.service.EmployeesLocalServiceUtil;
+import ats.global.techsoft.slayers.service.EmployeesService;
 import ats.global.techsoft.slayers.service.base.EmployeesLocalServiceBaseImpl;
 import ats.global.techsoft.slayers.service.persistence.EmployeesPersistence;
 
+import com.liferay.document.library.repository.cmis.Session;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(property = "model.class.name=ats.global.techsoft.slayers.model.Employees", service = AopService.class)
-public class EmployeesLocalServiceImpl extends EmployeesLocalServiceBaseImpl {
+public class EmployeesLocalServiceImpl extends EmployeesLocalServiceBaseImpl implements EmployeesService {
 
 	@Override
 	public Employees addEmployees(long groupId, long companyId, String empName, InputStream empPhotoStream,
@@ -69,25 +78,25 @@ public class EmployeesLocalServiceImpl extends EmployeesLocalServiceBaseImpl {
 
 	@Override
 	public Employees updateEmployees(long employeeId, String empName, InputStream empPhotoStream, String empGender,
-			int empAge, String emplRole, String empAddress, ServiceContext serviceContext) throws NoSuchEmployeesException, IOException {
-		
-	    Employees employee = _employeesPersistence.findByPrimaryKey(employeeId);
-	    employee.setEmpName(empName);
-	    if (empPhotoStream != null) {
-	        String empPhotoBase64 = convertImageToBase64(empPhotoStream);
-	        employee.setEmpPhoto(empPhotoBase64);
-	    }
-	    employee.setEmpGender(empGender);
-	    employee.setEmpAge(empAge);
-	    employee.setEmplRole(emplRole);
-	    employee.setEmpAddress(empAddress);
-	    employee.setModifiedDate(new Date()); 
-	    employee = _employeesPersistence.update(employee);
-	    
-	   return super.addEmployees(employee);
+			int empAge, String emplRole, String empAddress, ServiceContext serviceContext)
+			throws NoSuchEmployeesException, IOException {
+
+		Employees employee = _employeesPersistence.findByPrimaryKey(employeeId);
+		employee.setEmpName(empName);
+		if (empPhotoStream != null) {
+			String empPhotoBase64 = convertImageToBase64(empPhotoStream);
+			employee.setEmpPhoto(empPhotoBase64);
+		}
+		employee.setEmpGender(empGender);
+		employee.setEmpAge(empAge);
+		employee.setEmplRole(emplRole);
+		employee.setEmpAddress(empAddress);
+		employee.setModifiedDate(new Date());
+		employee = _employeesPersistence.update(employee);
+
+		return super.addEmployees(employee);
 	}
 
-	
 	public String convertImageToBase64(InputStream inputStream) throws IOException {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		byte[] buffer = new byte[1024];
@@ -99,6 +108,23 @@ public class EmployeesLocalServiceImpl extends EmployeesLocalServiceBaseImpl {
 		return Base64.getEncoder().encodeToString(imageBytes);
 	}
 
+	public List<Employees> ByEmployeeId(long EmployeeId) {
+		return _employeesPersistence.findByEmployeeId(EmployeeId);
+	}
+
+	public List<Employees> findByEmployeeName(String EmpName) {
+	    DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Employees.class, getClass().getClassLoader());
+	    dynamicQuery.add(RestrictionsFactoryUtil.ilike("EmpName", "%" + EmpName + "%")); 
+
+	    return EmployeesLocalServiceUtil.dynamicQuery(dynamicQuery);
+	}
+	
+	public List<Employees> getResultByGenderAndAge(String EmplRole){
+		return _employeesFinder.getResultByGenderAndAge(EmplRole);
+	}
+
 	@Reference
 	EmployeesPersistence _employeesPersistence;
+	@Reference
+	ats.global.techsoft.slayers.service.persistence.EmployeesFinder _employeesFinder;
 }

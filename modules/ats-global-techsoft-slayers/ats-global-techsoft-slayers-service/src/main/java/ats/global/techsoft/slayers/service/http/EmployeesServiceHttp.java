@@ -94,6 +94,89 @@ public class EmployeesServiceHttp {
 		}
 	}
 
+	public static ats.global.techsoft.slayers.model.Employees deleteEmployees(
+		HttpPrincipal httpPrincipal,
+		ats.global.techsoft.slayers.model.Employees employees) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				EmployeesServiceUtil.class, "deleteEmployees",
+				_deleteEmployeesParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, employees);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (ats.global.techsoft.slayers.model.Employees)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static ats.global.techsoft.slayers.model.Employees updateEmployees(
+			HttpPrincipal httpPrincipal, long employeeId, String empName,
+			java.io.InputStream empPhotoStream, String empGender, int empAge,
+			String emplRole, String empAddress,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws ats.global.techsoft.slayers.exception.NoSuchEmployeesException,
+			   java.io.IOException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				EmployeesServiceUtil.class, "updateEmployees",
+				_updateEmployeesParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, employeeId, empName, empPhotoStream, empGender,
+				empAge, emplRole, empAddress, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						ats.global.techsoft.slayers.exception.
+							NoSuchEmployeesException) {
+
+					throw (ats.global.techsoft.slayers.exception.
+						NoSuchEmployeesException)exception;
+				}
+
+				if (exception instanceof java.io.IOException) {
+					throw (java.io.IOException)exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (ats.global.techsoft.slayers.model.Employees)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static String convertImageToBase64(
 			HttpPrincipal httpPrincipal, java.io.InputStream inputStream)
 		throws java.io.IOException {
@@ -101,7 +184,7 @@ public class EmployeesServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				EmployeesServiceUtil.class, "convertImageToBase64",
-				_convertImageToBase64ParameterTypes1);
+				_convertImageToBase64ParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, inputStream);
@@ -138,7 +221,15 @@ public class EmployeesServiceHttp {
 		String.class, int.class, String.class, String.class, long.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _convertImageToBase64ParameterTypes1 =
+	private static final Class<?>[] _deleteEmployeesParameterTypes1 =
+		new Class[] {ats.global.techsoft.slayers.model.Employees.class};
+	private static final Class<?>[] _updateEmployeesParameterTypes2 =
+		new Class[] {
+			long.class, String.class, java.io.InputStream.class, String.class,
+			int.class, String.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _convertImageToBase64ParameterTypes3 =
 		new Class[] {java.io.InputStream.class};
 
 }

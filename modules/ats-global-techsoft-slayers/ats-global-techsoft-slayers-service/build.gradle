@@ -1,7 +1,9 @@
 dependencies {
 	compile project(":modules:ats-global-techsoft-slayers:ats-global-techsoft-slayers-api")
 
-	compileOnly group: "com.liferay.portal", name: "release.portal.api"
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileOnly group: 'com.liferay', name: 'com.liferay.portal.dao.orm.custom.sql.api', version: '1.0.0'
+	
 }
 
 buildService {

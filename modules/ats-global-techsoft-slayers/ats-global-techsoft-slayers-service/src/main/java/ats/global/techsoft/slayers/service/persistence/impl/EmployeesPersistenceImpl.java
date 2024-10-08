@@ -1800,6 +1800,1070 @@ public class EmployeesPersistenceImpl
 	private static final String _FINDER_COLUMN_EMPLOYEEID_EMPLOYEEID_2 =
 		"employees.EmployeeId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByEmpName;
+	private FinderPath _finderPathWithoutPaginationFindByEmpName;
+	private FinderPath _finderPathCountByEmpName;
+
+	/**
+	 * Returns all the employeeses where EmpName = &#63;.
+	 *
+	 * @param EmpName the emp name
+	 * @return the matching employeeses
+	 */
+	@Override
+	public List<Employees> findByEmpName(String EmpName) {
+		return findByEmpName(
+			EmpName, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the employeeses where EmpName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>EmployeesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param EmpName the emp name
+	 * @param start the lower bound of the range of employeeses
+	 * @param end the upper bound of the range of employeeses (not inclusive)
+	 * @return the range of matching employeeses
+	 */
+	@Override
+	public List<Employees> findByEmpName(String EmpName, int start, int end) {
+		return findByEmpName(EmpName, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the employeeses where EmpName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>EmployeesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param EmpName the emp name
+	 * @param start the lower bound of the range of employeeses
+	 * @param end the upper bound of the range of employeeses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching employeeses
+	 */
+	@Override
+	public List<Employees> findByEmpName(
+		String EmpName, int start, int end,
+		OrderByComparator<Employees> orderByComparator) {
+
+		return findByEmpName(EmpName, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the employeeses where EmpName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>EmployeesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param EmpName the emp name
+	 * @param start the lower bound of the range of employeeses
+	 * @param end the upper bound of the range of employeeses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching employeeses
+	 */
+	@Override
+	public List<Employees> findByEmpName(
+		String EmpName, int start, int end,
+		OrderByComparator<Employees> orderByComparator,
+		boolean useFinderCache) {
+
+		EmpName = Objects.toString(EmpName, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByEmpName;
+				finderArgs = new Object[] {EmpName};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByEmpName;
+			finderArgs = new Object[] {EmpName, start, end, orderByComparator};
+		}
+
+		List<Employees> list = null;
+
+		if (useFinderCache) {
+			list = (List<Employees>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Employees employees : list) {
+					if (!EmpName.equals(employees.getEmpName())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_EMPLOYEES_WHERE);
+
+			boolean bindEmpName = false;
+
+			if (EmpName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_EMPNAME_EMPNAME_3);
+			}
+			else {
+				bindEmpName = true;
+
+				sb.append(_FINDER_COLUMN_EMPNAME_EMPNAME_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(EmployeesModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindEmpName) {
+					queryPos.add(EmpName);
+				}
+
+				list = (List<Employees>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first employees in the ordered set where EmpName = &#63;.
+	 *
+	 * @param EmpName the emp name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching employees
+	 * @throws NoSuchEmployeesException if a matching employees could not be found
+	 */
+	@Override
+	public Employees findByEmpName_First(
+			String EmpName, OrderByComparator<Employees> orderByComparator)
+		throws NoSuchEmployeesException {
+
+		Employees employees = fetchByEmpName_First(EmpName, orderByComparator);
+
+		if (employees != null) {
+			return employees;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("EmpName=");
+		sb.append(EmpName);
+
+		sb.append("}");
+
+		throw new NoSuchEmployeesException(sb.toString());
+	}
+
+	/**
+	 * Returns the first employees in the ordered set where EmpName = &#63;.
+	 *
+	 * @param EmpName the emp name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching employees, or <code>null</code> if a matching employees could not be found
+	 */
+	@Override
+	public Employees fetchByEmpName_First(
+		String EmpName, OrderByComparator<Employees> orderByComparator) {
+
+		List<Employees> list = findByEmpName(EmpName, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last employees in the ordered set where EmpName = &#63;.
+	 *
+	 * @param EmpName the emp name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching employees
+	 * @throws NoSuchEmployeesException if a matching employees could not be found
+	 */
+	@Override
+	public Employees findByEmpName_Last(
+			String EmpName, OrderByComparator<Employees> orderByComparator)
+		throws NoSuchEmployeesException {
+
+		Employees employees = fetchByEmpName_Last(EmpName, orderByComparator);
+
+		if (employees != null) {
+			return employees;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("EmpName=");
+		sb.append(EmpName);
+
+		sb.append("}");
+
+		throw new NoSuchEmployeesException(sb.toString());
+	}
+
+	/**
+	 * Returns the last employees in the ordered set where EmpName = &#63;.
+	 *
+	 * @param EmpName the emp name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching employees, or <code>null</code> if a matching employees could not be found
+	 */
+	@Override
+	public Employees fetchByEmpName_Last(
+		String EmpName, OrderByComparator<Employees> orderByComparator) {
+
+		int count = countByEmpName(EmpName);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Employees> list = findByEmpName(
+			EmpName, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the employeeses before and after the current employees in the ordered set where EmpName = &#63;.
+	 *
+	 * @param EmployeeId the primary key of the current employees
+	 * @param EmpName the emp name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next employees
+	 * @throws NoSuchEmployeesException if a employees with the primary key could not be found
+	 */
+	@Override
+	public Employees[] findByEmpName_PrevAndNext(
+			long EmployeeId, String EmpName,
+			OrderByComparator<Employees> orderByComparator)
+		throws NoSuchEmployeesException {
+
+		EmpName = Objects.toString(EmpName, "");
+
+		Employees employees = findByPrimaryKey(EmployeeId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Employees[] array = new EmployeesImpl[3];
+
+			array[0] = getByEmpName_PrevAndNext(
+				session, employees, EmpName, orderByComparator, true);
+
+			array[1] = employees;
+
+			array[2] = getByEmpName_PrevAndNext(
+				session, employees, EmpName, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Employees getByEmpName_PrevAndNext(
+		Session session, Employees employees, String EmpName,
+		OrderByComparator<Employees> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_EMPLOYEES_WHERE);
+
+		boolean bindEmpName = false;
+
+		if (EmpName.isEmpty()) {
+			sb.append(_FINDER_COLUMN_EMPNAME_EMPNAME_3);
+		}
+		else {
+			bindEmpName = true;
+
+			sb.append(_FINDER_COLUMN_EMPNAME_EMPNAME_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(EmployeesModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindEmpName) {
+			queryPos.add(EmpName);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(employees)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Employees> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the employeeses where EmpName = &#63; from the database.
+	 *
+	 * @param EmpName the emp name
+	 */
+	@Override
+	public void removeByEmpName(String EmpName) {
+		for (Employees employees :
+				findByEmpName(
+					EmpName, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(employees);
+		}
+	}
+
+	/**
+	 * Returns the number of employeeses where EmpName = &#63;.
+	 *
+	 * @param EmpName the emp name
+	 * @return the number of matching employeeses
+	 */
+	@Override
+	public int countByEmpName(String EmpName) {
+		EmpName = Objects.toString(EmpName, "");
+
+		FinderPath finderPath = _finderPathCountByEmpName;
+
+		Object[] finderArgs = new Object[] {EmpName};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_EMPLOYEES_WHERE);
+
+			boolean bindEmpName = false;
+
+			if (EmpName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_EMPNAME_EMPNAME_3);
+			}
+			else {
+				bindEmpName = true;
+
+				sb.append(_FINDER_COLUMN_EMPNAME_EMPNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindEmpName) {
+					queryPos.add(EmpName);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_EMPNAME_EMPNAME_2 =
+		"employees.EmpName = ?";
+
+	private static final String _FINDER_COLUMN_EMPNAME_EMPNAME_3 =
+		"(employees.EmpName IS NULL OR employees.EmpName = '')";
+
+	private FinderPath _finderPathWithPaginationFindByEmplRole;
+	private FinderPath _finderPathWithoutPaginationFindByEmplRole;
+	private FinderPath _finderPathCountByEmplRole;
+
+	/**
+	 * Returns all the employeeses where EmplRole = &#63;.
+	 *
+	 * @param EmplRole the empl role
+	 * @return the matching employeeses
+	 */
+	@Override
+	public List<Employees> findByEmplRole(String EmplRole) {
+		return findByEmplRole(
+			EmplRole, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the employeeses where EmplRole = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>EmployeesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param EmplRole the empl role
+	 * @param start the lower bound of the range of employeeses
+	 * @param end the upper bound of the range of employeeses (not inclusive)
+	 * @return the range of matching employeeses
+	 */
+	@Override
+	public List<Employees> findByEmplRole(String EmplRole, int start, int end) {
+		return findByEmplRole(EmplRole, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the employeeses where EmplRole = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>EmployeesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param EmplRole the empl role
+	 * @param start the lower bound of the range of employeeses
+	 * @param end the upper bound of the range of employeeses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching employeeses
+	 */
+	@Override
+	public List<Employees> findByEmplRole(
+		String EmplRole, int start, int end,
+		OrderByComparator<Employees> orderByComparator) {
+
+		return findByEmplRole(EmplRole, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the employeeses where EmplRole = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>EmployeesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param EmplRole the empl role
+	 * @param start the lower bound of the range of employeeses
+	 * @param end the upper bound of the range of employeeses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching employeeses
+	 */
+	@Override
+	public List<Employees> findByEmplRole(
+		String EmplRole, int start, int end,
+		OrderByComparator<Employees> orderByComparator,
+		boolean useFinderCache) {
+
+		EmplRole = Objects.toString(EmplRole, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByEmplRole;
+				finderArgs = new Object[] {EmplRole};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByEmplRole;
+			finderArgs = new Object[] {EmplRole, start, end, orderByComparator};
+		}
+
+		List<Employees> list = null;
+
+		if (useFinderCache) {
+			list = (List<Employees>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Employees employees : list) {
+					if (!EmplRole.equals(employees.getEmplRole())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_EMPLOYEES_WHERE);
+
+			boolean bindEmplRole = false;
+
+			if (EmplRole.isEmpty()) {
+				sb.append(_FINDER_COLUMN_EMPLROLE_EMPLROLE_3);
+			}
+			else {
+				bindEmplRole = true;
+
+				sb.append(_FINDER_COLUMN_EMPLROLE_EMPLROLE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(EmployeesModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindEmplRole) {
+					queryPos.add(EmplRole);
+				}
+
+				list = (List<Employees>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first employees in the ordered set where EmplRole = &#63;.
+	 *
+	 * @param EmplRole the empl role
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching employees
+	 * @throws NoSuchEmployeesException if a matching employees could not be found
+	 */
+	@Override
+	public Employees findByEmplRole_First(
+			String EmplRole, OrderByComparator<Employees> orderByComparator)
+		throws NoSuchEmployeesException {
+
+		Employees employees = fetchByEmplRole_First(
+			EmplRole, orderByComparator);
+
+		if (employees != null) {
+			return employees;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("EmplRole=");
+		sb.append(EmplRole);
+
+		sb.append("}");
+
+		throw new NoSuchEmployeesException(sb.toString());
+	}
+
+	/**
+	 * Returns the first employees in the ordered set where EmplRole = &#63;.
+	 *
+	 * @param EmplRole the empl role
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching employees, or <code>null</code> if a matching employees could not be found
+	 */
+	@Override
+	public Employees fetchByEmplRole_First(
+		String EmplRole, OrderByComparator<Employees> orderByComparator) {
+
+		List<Employees> list = findByEmplRole(
+			EmplRole, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last employees in the ordered set where EmplRole = &#63;.
+	 *
+	 * @param EmplRole the empl role
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching employees
+	 * @throws NoSuchEmployeesException if a matching employees could not be found
+	 */
+	@Override
+	public Employees findByEmplRole_Last(
+			String EmplRole, OrderByComparator<Employees> orderByComparator)
+		throws NoSuchEmployeesException {
+
+		Employees employees = fetchByEmplRole_Last(EmplRole, orderByComparator);
+
+		if (employees != null) {
+			return employees;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("EmplRole=");
+		sb.append(EmplRole);
+
+		sb.append("}");
+
+		throw new NoSuchEmployeesException(sb.toString());
+	}
+
+	/**
+	 * Returns the last employees in the ordered set where EmplRole = &#63;.
+	 *
+	 * @param EmplRole the empl role
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching employees, or <code>null</code> if a matching employees could not be found
+	 */
+	@Override
+	public Employees fetchByEmplRole_Last(
+		String EmplRole, OrderByComparator<Employees> orderByComparator) {
+
+		int count = countByEmplRole(EmplRole);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Employees> list = findByEmplRole(
+			EmplRole, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the employeeses before and after the current employees in the ordered set where EmplRole = &#63;.
+	 *
+	 * @param EmployeeId the primary key of the current employees
+	 * @param EmplRole the empl role
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next employees
+	 * @throws NoSuchEmployeesException if a employees with the primary key could not be found
+	 */
+	@Override
+	public Employees[] findByEmplRole_PrevAndNext(
+			long EmployeeId, String EmplRole,
+			OrderByComparator<Employees> orderByComparator)
+		throws NoSuchEmployeesException {
+
+		EmplRole = Objects.toString(EmplRole, "");
+
+		Employees employees = findByPrimaryKey(EmployeeId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Employees[] array = new EmployeesImpl[3];
+
+			array[0] = getByEmplRole_PrevAndNext(
+				session, employees, EmplRole, orderByComparator, true);
+
+			array[1] = employees;
+
+			array[2] = getByEmplRole_PrevAndNext(
+				session, employees, EmplRole, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Employees getByEmplRole_PrevAndNext(
+		Session session, Employees employees, String EmplRole,
+		OrderByComparator<Employees> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_EMPLOYEES_WHERE);
+
+		boolean bindEmplRole = false;
+
+		if (EmplRole.isEmpty()) {
+			sb.append(_FINDER_COLUMN_EMPLROLE_EMPLROLE_3);
+		}
+		else {
+			bindEmplRole = true;
+
+			sb.append(_FINDER_COLUMN_EMPLROLE_EMPLROLE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(EmployeesModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindEmplRole) {
+			queryPos.add(EmplRole);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(employees)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Employees> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the employeeses where EmplRole = &#63; from the database.
+	 *
+	 * @param EmplRole the empl role
+	 */
+	@Override
+	public void removeByEmplRole(String EmplRole) {
+		for (Employees employees :
+				findByEmplRole(
+					EmplRole, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(employees);
+		}
+	}
+
+	/**
+	 * Returns the number of employeeses where EmplRole = &#63;.
+	 *
+	 * @param EmplRole the empl role
+	 * @return the number of matching employeeses
+	 */
+	@Override
+	public int countByEmplRole(String EmplRole) {
+		EmplRole = Objects.toString(EmplRole, "");
+
+		FinderPath finderPath = _finderPathCountByEmplRole;
+
+		Object[] finderArgs = new Object[] {EmplRole};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_EMPLOYEES_WHERE);
+
+			boolean bindEmplRole = false;
+
+			if (EmplRole.isEmpty()) {
+				sb.append(_FINDER_COLUMN_EMPLROLE_EMPLROLE_3);
+			}
+			else {
+				bindEmplRole = true;
+
+				sb.append(_FINDER_COLUMN_EMPLROLE_EMPLROLE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindEmplRole) {
+					queryPos.add(EmplRole);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_EMPLROLE_EMPLROLE_2 =
+		"employees.EmplRole = ?";
+
+	private static final String _FINDER_COLUMN_EMPLROLE_EMPLROLE_3 =
+		"(employees.EmplRole IS NULL OR employees.EmplRole = '')";
+
 	public EmployeesPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2436,6 +3500,42 @@ public class EmployeesPersistenceImpl
 		_finderPathCountByEmployeeId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEmployeeId",
 			new String[] {Long.class.getName()}, new String[] {"EmployeeId"},
+			false);
+
+		_finderPathWithPaginationFindByEmpName = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEmpName",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"EmpName"}, true);
+
+		_finderPathWithoutPaginationFindByEmpName = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEmpName",
+			new String[] {String.class.getName()}, new String[] {"EmpName"},
+			true);
+
+		_finderPathCountByEmpName = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEmpName",
+			new String[] {String.class.getName()}, new String[] {"EmpName"},
+			false);
+
+		_finderPathWithPaginationFindByEmplRole = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEmplRole",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"EmplRole"}, true);
+
+		_finderPathWithoutPaginationFindByEmplRole = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEmplRole",
+			new String[] {String.class.getName()}, new String[] {"EmplRole"},
+			true);
+
+		_finderPathCountByEmplRole = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEmplRole",
+			new String[] {String.class.getName()}, new String[] {"EmplRole"},
 			false);
 
 		_setEmployeesUtilPersistence(this);

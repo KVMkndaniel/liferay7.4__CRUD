@@ -89,6 +89,8 @@ public interface EmployeesLocalService
 			ServiceContext serviceContext)
 		throws IOException;
 
+	public List<Employees> ByEmployeeId(long EmployeeId);
+
 	public String convertImageToBase64(InputStream inputStream)
 		throws IOException;
 
@@ -226,6 +228,8 @@ public interface EmployeesLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Employees fetchEmployeesByUuidAndGroupId(String uuid, long groupId);
 
+	public List<Employees> findByEmployeeName(String EmpName);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -320,6 +324,9 @@ public interface EmployeesLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Employees> getResultByGenderAndAge(String EmplRole);
 
 	/**
 	 * Updates the employees in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

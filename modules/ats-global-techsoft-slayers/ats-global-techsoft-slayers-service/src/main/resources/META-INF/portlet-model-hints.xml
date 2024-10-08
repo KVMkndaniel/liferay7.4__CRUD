@@ -16,4 +16,10 @@
 		<field name="EmplRole" type="String" />
 		<field name="EmpAddress" type="String" />
 	</model>
+	<model name="ats.global.techsoft.slayers.model.student">
+		<field name="uuid" type="String" />
+		<field name="id" type="long" />
+		<field name="name" type="String" />
+		<field name="standard" type="String" />
+	</model>
 </model-hints>

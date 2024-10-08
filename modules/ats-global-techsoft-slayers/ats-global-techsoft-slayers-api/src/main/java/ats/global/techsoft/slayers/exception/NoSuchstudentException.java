@@ -16,22 +16,22 @@ package ats.global.techsoft.slayers.exception;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * @author 
+ * @author Brian Wing Shun Chan
  */
-public class NoSuchEmployeesException extends NoSuchModelException {
+public class NoSuchstudentException extends NoSuchModelException {
 
-	public NoSuchEmployeesException() {
+	public NoSuchstudentException() {
 	}
 
-	public NoSuchEmployeesException(String msg) {
+	public NoSuchstudentException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchEmployeesException(String msg, Throwable throwable) {
+	public NoSuchstudentException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public NoSuchEmployeesException(Throwable throwable) {
+	public NoSuchstudentException(Throwable throwable) {
 		super(throwable);
 	}
 

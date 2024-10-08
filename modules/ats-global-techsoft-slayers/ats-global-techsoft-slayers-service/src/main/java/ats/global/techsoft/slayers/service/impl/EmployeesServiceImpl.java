@@ -14,6 +14,7 @@
 
 package ats.global.techsoft.slayers.service.impl;
 
+import ats.global.techsoft.slayers.exception.NoSuchEmployeesException;
 import ats.global.techsoft.slayers.model.Employees;
 import ats.global.techsoft.slayers.service.base.EmployeesServiceBaseImpl;
 import ats.global.techsoft.slayers.service.persistence.EmployeesPersistence;
@@ -33,17 +34,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	property = {
-		"json.web.service.context.name=ats",
-		"json.web.service.context.path=Employees"
-	},
-	service = AopService.class
-)
+@Component(property = { "json.web.service.context.name=ats",
+		"json.web.service.context.path=Employees" }, service = AopService.class)
 public class EmployeesServiceImpl extends EmployeesServiceBaseImpl {
-	
 
-	@Override
 	public Employees addEmployees(long groupId, long companyId, String empName, InputStream empPhotoStream,
 			String empGender, int empAge, String emplRole, String empAddress, long empKey,
 			ServiceContext serviceContext) throws IOException {
@@ -58,7 +52,7 @@ public class EmployeesServiceImpl extends EmployeesServiceBaseImpl {
 		employee.setEmpPhoto(empPhotoBase64);
 		employee.setEmpGender(empGender);
 		employee.setEmpAge(empAge);
-		employee.setEmplRole(emplRole);
+		employee.setEmplRole(emplRole); 
 		employee.setEmpAddress(empAddress);
 		employee.setEmpKey(empKey);
 		employee.setCreateDate(new Date());
@@ -67,8 +61,32 @@ public class EmployeesServiceImpl extends EmployeesServiceBaseImpl {
 		return employee;
 	}
 
-	
+	@Override
+	public Employees deleteEmployees(Employees employees) {
+		return employees;
+	}
 
+	@Override
+	public Employees updateEmployees(long employeeId, String empName, InputStream empPhotoStream, String empGender,
+			int empAge, String emplRole, String empAddress, ServiceContext serviceContext) throws NoSuchEmployeesException, IOException {
+		
+	    Employees employee = _employeesPersistence.findByPrimaryKey(employeeId);
+	    employee.setEmpName(empName);
+	    if (empPhotoStream != null) {
+	        String empPhotoBase64 = convertImageToBase64(empPhotoStream);
+	        employee.setEmpPhoto(empPhotoBase64);
+	    }
+	    employee.setEmpGender(empGender);
+	    employee.setEmpAge(empAge);
+	    employee.setEmplRole(emplRole);
+	    employee.setEmpAddress(empAddress);
+	    employee.setModifiedDate(new Date()); 
+	    employee = _employeesPersistence.update(employee);
+	    
+	   return employee;
+	}
+
+	
 	public String convertImageToBase64(InputStream inputStream) throws IOException {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		byte[] buffer = new byte[1024];
@@ -80,6 +98,7 @@ public class EmployeesServiceImpl extends EmployeesServiceBaseImpl {
 		return Base64.getEncoder().encodeToString(imageBytes);
 	}
 
+	
 	@Reference
 	EmployeesPersistence _employeesPersistence;
 

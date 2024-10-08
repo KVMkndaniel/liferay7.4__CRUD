@@ -73,6 +73,10 @@ public class EmployeesLocalServiceUtil {
 			emplRole, empAddress, empKey, serviceContext);
 	}
 
+	public static List<Employees> ByEmployeeId(long EmployeeId) {
+		return getService().ByEmployeeId(EmployeeId);
+	}
+
 	public static String convertImageToBase64(InputStream inputStream)
 		throws java.io.IOException {
 
@@ -242,6 +246,10 @@ public class EmployeesLocalServiceUtil {
 		return getService().fetchEmployeesByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static List<Employees> findByEmployeeName(String EmpName) {
+		return getService().findByEmployeeName(EmpName);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -362,6 +370,10 @@ public class EmployeesLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static List<Employees> getResultByGenderAndAge(String EmplRole) {
+		return getService().getResultByGenderAndAge(EmplRole);
 	}
 
 	/**

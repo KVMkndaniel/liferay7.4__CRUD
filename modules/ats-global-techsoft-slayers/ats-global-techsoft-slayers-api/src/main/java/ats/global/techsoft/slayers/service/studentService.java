@@ -14,30 +14,23 @@
 
 package ats.global.techsoft.slayers.service;
 
-import ats.global.techsoft.slayers.exception.NoSuchEmployeesException;
-import ats.global.techsoft.slayers.model.Employees;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Provides the remote service interface for Employees. Methods of this
+ * Provides the remote service interface for student. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
  * @author Brian Wing Shun Chan
- * @see EmployeesServiceUtil
+ * @see studentServiceUtil
  * @generated
  */
 @AccessControlled
@@ -47,24 +40,13 @@ import org.osgi.annotation.versioning.ProviderType;
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}
 )
-public interface EmployeesService extends BaseService {
+public interface studentService extends BaseService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add custom service methods to <code>ats.global.techsoft.slayers.service.impl.EmployeesServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the employees remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link EmployeesServiceUtil} if injection and service tracking are not available.
+	 * Never modify this interface directly. Add custom service methods to <code>ats.global.techsoft.slayers.service.impl.studentServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the student remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link studentServiceUtil} if injection and service tracking are not available.
 	 */
-	public Employees addEmployees(
-			long groupId, long companyId, String empName,
-			InputStream empPhotoStream, String empGender, int empAge,
-			String emplRole, String empAddress, long empKey,
-			ServiceContext serviceContext)
-		throws IOException;
-
-	public String convertImageToBase64(InputStream inputStream)
-		throws IOException;
-
-	public Employees deleteEmployees(Employees employees);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -72,11 +54,5 @@ public interface EmployeesService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
-
-	public Employees updateEmployees(
-			long employeeId, String empName, InputStream empPhotoStream,
-			String empGender, int empAge, String emplRole, String empAddress,
-			ServiceContext serviceContext)
-		throws IOException, NoSuchEmployeesException;
 
 }

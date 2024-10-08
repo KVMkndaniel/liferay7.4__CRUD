@@ -13,3 +13,10 @@ create table ATS_Employees (
 	EmplRole VARCHAR(75) null,
 	EmpAddress VARCHAR(75) null
 );
+
+create table ATS_student (
+	uuid_ VARCHAR(75) null,
+	id_ LONG not null primary key,
+	name VARCHAR(75) null,
+	standard VARCHAR(75) null
+);

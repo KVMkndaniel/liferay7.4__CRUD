@@ -67,6 +67,13 @@ public class EmployeesLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<ats.global.techsoft.slayers.model.Employees>
+		ByEmployeeId(long EmployeeId) {
+
+		return _employeesLocalService.ByEmployeeId(EmployeeId);
+	}
+
+	@Override
 	public String convertImageToBase64(java.io.InputStream inputStream)
 		throws java.io.IOException {
 
@@ -269,6 +276,13 @@ public class EmployeesLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<ats.global.techsoft.slayers.model.Employees>
+		findByEmployeeName(String EmpName) {
+
+		return _employeesLocalService.findByEmployeeName(EmpName);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -408,6 +422,13 @@ public class EmployeesLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _employeesLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.List<ats.global.techsoft.slayers.model.Employees>
+		getResultByGenderAndAge(String EmplRole) {
+
+		return _employeesLocalService.getResultByGenderAndAge(EmplRole);
 	}
 
 	/**

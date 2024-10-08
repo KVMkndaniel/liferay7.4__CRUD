@@ -11,28 +11,21 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package ats.global.techsoft.slayers.exception;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+package ats.global.techsoft.slayers.service.impl;
+
+import ats.global.techsoft.slayers.service.base.studentLocalServiceBaseImpl;
+
+import com.liferay.portal.aop.AopService;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author 
+ * @author Brian Wing Shun Chan
  */
-public class NoSuchEmployeesException extends NoSuchModelException {
-
-	public NoSuchEmployeesException() {
-	}
-
-	public NoSuchEmployeesException(String msg) {
-		super(msg);
-	}
-
-	public NoSuchEmployeesException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public NoSuchEmployeesException(Throwable throwable) {
-		super(throwable);
-	}
-
+@Component(
+	property = "model.class.name=ats.global.techsoft.slayers.model.student",
+	service = AopService.class
+)
+public class studentLocalServiceImpl extends studentLocalServiceBaseImpl {
 }
