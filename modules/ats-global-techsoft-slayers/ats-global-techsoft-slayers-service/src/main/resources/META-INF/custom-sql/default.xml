@@ -8,4 +8,16 @@
 	</sql>
 </custom-sql>
 
+<!-- SELECT * FROM ats_lobal_dxp.ats_employees;
 
+SELECT * FROM ats_employees
+WHERE EmplRole LIKE 'HR%';
+
+SELECT * FROM ats_employees
+WHERE EmpAge >= 23;
+
+SELECT * FROM ats_employees empRole where empRole.EmplRole = "Developer";
+
+SELECT EmpName, EmpPhoto FROM ats_employees WHERE EmplRole = 'Developer';
+
+ -->

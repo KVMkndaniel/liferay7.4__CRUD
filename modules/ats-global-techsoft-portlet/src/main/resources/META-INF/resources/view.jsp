@@ -12,8 +12,8 @@
 	<portlet:param name="mvcPath" value="/Employee/searchEmployee.jsp" />
 </liferay-portlet:renderURL>
 
-<aui:a href="${SearchURL}" cssClass="btn btn-primary"
-	label="FinderMethod" />	
+	<aui:a href="${SearchURL}" cssClass="btn btn-primary"
+	label="FinderMethod" />
 	<aui:a href="${formURL}" cssClass="btn btn-prim adddata" >
     <img src="http://localhost:8080/documents/d/guest/user" alt="personIcon" style="width:40px; height:40px; margin-right:5px;" />
     AddEmployee

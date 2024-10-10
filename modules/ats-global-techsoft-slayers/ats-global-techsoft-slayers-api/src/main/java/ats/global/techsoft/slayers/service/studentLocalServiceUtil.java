@@ -294,4 +294,9 @@ public class studentLocalServiceUtil {
 
 	private static volatile studentLocalService _service;
 
+	public static student getInstance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

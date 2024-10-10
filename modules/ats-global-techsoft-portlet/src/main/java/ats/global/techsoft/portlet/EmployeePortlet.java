@@ -7,20 +7,34 @@ import ats.global.techsoft.slayers.service.EmployeesLocalServiceUtil;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
@@ -28,6 +42,9 @@ import javax.portlet.PortletException;
 import javax.portlet.ProcessAction;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -39,19 +56,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 public class EmployeePortlet extends MVCPortlet {
 
-	public void SearchEmployee(ActionRequest actionRequest, ActionResponse actionResponse) {
-		_log.info("Executing Finder");
-		String EmpName = ParamUtil.getString(actionRequest, "EmpName");
-		System.out.println("Searching for employee name: " + EmpName);
-		List<Employees> employees = null;
-		if (Validator.isNotNull(EmpName)) {
-			employees = EmployeesLocalServiceUtil.findByEmployeeName(EmpName);
-		} else {
-			System.out.println("Employee name is empty");
-		}
-		actionRequest.setAttribute("employees", employees);
-	}
-
 	@Override
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
@@ -61,6 +65,8 @@ public class EmployeePortlet extends MVCPortlet {
 		DynamicQuery dynamicQuery = EmployeesLocalServiceUtil.dynamicQuery();
 		List<Employees> datalist = EmployeesLocalServiceUtil.dynamicQuery(dynamicQuery);
 		renderRequest.setAttribute("datalist", datalist);
+		
+		
 		/* ===================================================================== */
 		System.out.println("Custom sql......");
 		// String EmplRole =
@@ -68,7 +74,24 @@ public class EmployeePortlet extends MVCPortlet {
 		// System.out.println(" Successfully Employee Role Retrived:::" + EmplRole);
 		List<Employees> employees = EmployeesLocalServiceUtil.getResultByGenderAndAge("Developer");
 		renderRequest.setAttribute("employees", employees);
-		System.out.println("Custom-sql used Employee Role based List" + employees.toString());
+		//System.out.println("Custom-sql used Employee Role based List" + employees.toString());
+		
+		System.out.println("====Dynamic Query Start Retrieve Employee Email Information=========");
+		DynamicQuery employeeQuery = DynamicQueryFactoryUtil.forClass(Employees.class, "Employees", PortalClassLoaderUtil.getClassLoader());
+		employeeQuery.add(RestrictionsFactoryUtil.like("Employees.EmpAddress", "%kumar%"));
+		try {
+		    List<Employees> empList = EmployeesLocalServiceUtil.dynamicQuery(employeeQuery);
+		    for (Employees listData : empList) {
+		        System.out.println("Employee Id :::" + listData.getEmployeeId());
+		        System.out.println("Employee Name :::" + listData.getEmpName());
+		        System.out.println("Employee Address :::" + listData.getEmpAddress());
+		        System.out.println("Employee Role :::" + listData.getEmplRole());
+		    }
+		} catch (Exception e) {
+		    _log.info("Error in listData: " + e);
+		}
+		_log.info("End :::::");
+
 		super.doView(renderRequest, renderResponse);
 	}
 
@@ -129,6 +152,68 @@ public class EmployeePortlet extends MVCPortlet {
 		}
 	}
 
+	public void SearchEmployee(ActionRequest actionRequest, ActionResponse actionResponse) {
+		_log.info("Executing Finder");
+		String EmpName = ParamUtil.getString(actionRequest, "EmpName");
+		System.out.println("Searching for employee name: " + EmpName);
+		List<Employees> employees = null;
+		if (Validator.isNotNull(EmpName)) {
+			employees = EmployeesLocalServiceUtil.findByEmployeeName(EmpName);
+		} else {
+			System.out.println("Employee name is empty");
+		}
+		actionRequest.setAttribute("employees", employees);
+	}
+
+	@Override
+	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+	        throws IOException, PortletException {
+	    _log.info("Inside serveResource method.");
+	    try {
+	        if ("filterdata".equalsIgnoreCase(resourceRequest.getResourceID())) {
+	            String filterParam = ParamUtil.getString(resourceRequest, "filters", "");
+	            _log.info("Received filterParam: " + filterParam);
+
+	            String[] params = filterParam.split("\\|");
+	            String genderFilter = params.length > 0 ? params[0].trim() : "";
+	            String roleFilter = params.length > 1 ? params[1].trim() : "";
+
+	            List<Employees> employees = EmployeesLocalServiceUtil.getEmployeeses(-1, -1);
+	            _log.info("Total number of Employees: " + employees.size());
+	            List<Employees> filteredEmployees = new ArrayList<>();
+	            for (Employees emp : employees) {
+	            boolean genderMatch = genderFilter.isEmpty() || emp.getEmpGender().equalsIgnoreCase(genderFilter);
+	            boolean roleMatch = roleFilter.isEmpty() || emp.getEmplRole().equalsIgnoreCase(roleFilter);
+	            
+	            if (genderMatch && roleMatch) {
+	                    filteredEmployees.add(emp);
+	                }
+	            }
+	            _log.info("Filtered Employees Size: " + filteredEmployees.size());
+	            JSONArray usersArray = JSONFactoryUtil.createJSONArray();
+	            for (Employees emp : filteredEmployees) {
+	                JSONObject userJson = JSONFactoryUtil.createJSONObject();
+	                userJson.put("employeeId", emp.getEmployeeId());
+	                userJson.put("empName", emp.getEmpName());
+	                userJson.put("empGender", emp.getEmpGender());
+	                userJson.put("emplRole", emp.getEmplRole());
+	                userJson.put("empAddress", emp.getEmpAddress());
+	                usersArray.put(userJson);
+	            }
+
+	            JSONObject responseObject = JSONFactoryUtil.createJSONObject();
+	            responseObject.put("datalist", usersArray);
+
+	            PrintWriter out = resourceResponse.getWriter();
+	            out.print(responseObject.toString());
+	        }
+	    } catch (Exception e) {
+	        _log.error("Error in serveResource: ", e);
+	    }
+	    super.serveResource(resourceRequest, resourceResponse);
+	}
+
+	
 	@Reference
 	EmployeesLocalService _employeeLocalService;
 
