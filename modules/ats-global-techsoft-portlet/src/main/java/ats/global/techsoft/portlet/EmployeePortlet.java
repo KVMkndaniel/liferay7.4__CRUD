@@ -76,11 +76,12 @@ public class EmployeePortlet extends MVCPortlet {
 		renderRequest.setAttribute("employees", employees);
 		//System.out.println("Custom-sql used Employee Role based List" + employees.toString());
 		
-		System.out.println("====Dynamic Query Start Retrieve Employee Email Information=========");
+		System.out.println("=============");
 		DynamicQuery employeeQuery = DynamicQueryFactoryUtil.forClass(Employees.class, "Employees", PortalClassLoaderUtil.getClassLoader());
 		employeeQuery.add(RestrictionsFactoryUtil.like("Employees.EmpAddress", "%kumar%"));
 		try {
 		    List<Employees> empList = EmployeesLocalServiceUtil.dynamicQuery(employeeQuery);
+			System.out.println("<------Dynamic Query Start Retrieve Employee Email Information------>");
 		    for (Employees listData : empList) {
 		        System.out.println("Employee Id :::" + listData.getEmployeeId());
 		        System.out.println("Employee Name :::" + listData.getEmpName());
