@@ -165,53 +165,7 @@ public class EmployeePortlet extends MVCPortlet {
 		actionRequest.setAttribute("employees", employees);
 	}
 
-	@Override
-	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-	        throws IOException, PortletException {
-	    _log.info("Inside serveResource method.");
-	    try {
-	        if ("filterdata".equalsIgnoreCase(resourceRequest.getResourceID())) {
-	            String filterParam = ParamUtil.getString(resourceRequest, "filters", "");
-	            _log.info("Received filterParam: " + filterParam);
-
-	            String[] params = filterParam.split("\\|");
-	            String genderFilter = params.length > 0 ? params[0].trim() : "";
-	            String roleFilter = params.length > 1 ? params[1].trim() : "";
-
-	            List<Employees> employees = EmployeesLocalServiceUtil.getEmployeeses(-1, -1);
-	            _log.info("Total number of Employees: " + employees.size());
-	            List<Employees> filteredEmployees = new ArrayList<>();
-	            for (Employees emp : employees) {
-	            boolean genderMatch = genderFilter.isEmpty() || emp.getEmpGender().equalsIgnoreCase(genderFilter);
-	            boolean roleMatch = roleFilter.isEmpty() || emp.getEmplRole().equalsIgnoreCase(roleFilter);
-	            
-	            if (genderMatch && roleMatch) {
-	                    filteredEmployees.add(emp);
-	                }
-	            }
-	            _log.info("Filtered Employees Size: " + filteredEmployees.size());
-	            JSONArray usersArray = JSONFactoryUtil.createJSONArray();
-	            for (Employees emp : filteredEmployees) {
-	                JSONObject userJson = JSONFactoryUtil.createJSONObject();
-	                userJson.put("employeeId", emp.getEmployeeId());
-	                userJson.put("empName", emp.getEmpName());
-	                userJson.put("empGender", emp.getEmpGender());
-	                userJson.put("emplRole", emp.getEmplRole());
-	                userJson.put("empAddress", emp.getEmpAddress());
-	                usersArray.put(userJson);
-	            }
-
-	            JSONObject responseObject = JSONFactoryUtil.createJSONObject();
-	            responseObject.put("datalist", usersArray);
-
-	            PrintWriter out = resourceResponse.getWriter();
-	            out.print(responseObject.toString());
-	        }
-	    } catch (Exception e) {
-	        _log.error("Error in serveResource: ", e);
-	    }
-	    super.serveResource(resourceRequest, resourceResponse);
-	}
+	
 
 	
 	@Reference
